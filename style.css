@@ -1,0 +1,9 @@
+.new-book {
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title,
+.book-author {
+    display: inline;
+}
