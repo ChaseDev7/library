@@ -1,9 +1,88 @@
+body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%;
+}
+
+.book-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(220, 239, 239);
+    width: 50%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+button {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    border: 0;
+    padding: 10px 25px;
+    border-radius: 20px;
+    box-shadow: 1px 2px 3px 1px lightgray;
+}
+
 .new-book {
+    margin: 50px 25px;
+    padding: 10px;
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    background-color: rgb(220, 239, 239);
+    box-shadow: 1px 2px 3px 1px lightgray;
+}
+
+.close-container {
     display: flex;
     flex-direction: column;
 }
 
-.book-title,
-.book-author {
-    display: inline;
+.close-button {
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+label {
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+
+input {
+    font-size: 15px;
+    border: 0;
+    box-shadow: 1px 2px 3px 1px lightgray;
+    border-radius: 10px;
+    padding-left: 10px;
+    font-family: 'Roboto', sans-serif;
+    width: 40%;
+}
+
+.book-listing {
+    border: 2px solid lightgray;
+    padding: 20px;
+    width: 70%;
+    border-radius: 10px;
+    box-shadow: 1px 2px 3px 1px lightgray;
+    margin-bottom: 20px;
+    background-color: rgb(236, 229, 229);
+}
+.remove-book {
+    padding: 5px;
+    border-radius: 5px;
 }

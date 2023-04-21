@@ -17,46 +17,66 @@ console.log(theHobbit.book());
 // title.textContent = theHobbit.title;
 // body.appendChild(title);
 
+const newBook = document.querySelector(".new-book");
+newBook.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
+const btnClose = document.querySelector(".close-container");
+const bookListItem = document.querySelector(".remove-button-container");
+// const btnRemoveBook = document.querySelector(".remove-book");
+const titleContainer = document.querySelector(".book-title-container");
+const authorContainer = document.querySelector(".book-author-container");
+let buttonClick = false;
+const bookTitleLabel = document.createElement("label");
+const bookTitle = document.createElement("input");
+const bookAuthorLabel = document.createElement("label");
+const bookAuthor = document.createElement("input");
 
-btnAddBook.addEventListener("click", addBook);
+
+bookListItem.style.display = "flex";
+bookListItem.style.flexDirection = "column";
+bookListItem.style.alignItems = "end";
+
+if (buttonClick == false) {
+    btnAddBook.addEventListener("click", addBook);
+    buttonClick = true;
+} else if (buttonClick == true) {
+    btnAddBook.removeEventListener();
+}
 
 function addBook() {
-    const newBook = document.querySelector(".new-book");
-    newBook.style.margin = "15px";
-    newBook.style.padding = "20px";
-    newBook.style.border = "1px solid black";
-    newBook.style.borderRadius = "20px";
-    
-    function addTitle() {
-        const bookTitleLabel = document.createElement("label");
-        bookTitleLabel.classList.add("title-label");
-        bookTitleLabel.setAttribute("for", "title-name");
-        bookTitleLabel.textContent = "Book Title:";
-        bookTitleLabel.style.paddingRight = "10px";
-        newBook.appendChild(bookTitleLabel);
-        const bookTitle = document.createElement("input");
-        bookTitle.setAttribute("type", "text");
-        bookTitle.setAttribute("id", "title-name");
-        bookTitle.setAttribute("name", "title-name");
-        newBook.appendChild(bookTitle);
+    newBook.style.display = "flex";
+    newBook.style.flexDirection = "column";
+    btnClose.style.alignItems = "end";
+
+    btnClose.addEventListener("click", closeContainer);
+
+    function closeContainer() {
+        newBook.style.display = "none";
+        bookTitle.value = "";
+        bookAuthor.value = "";
     }
 
-    addTitle();
+    bookTitleLabel.classList.add("title-label");
+    bookTitleLabel.setAttribute("for", "title-name");
+    bookTitleLabel.textContent = "Book Title:";
+    bookTitleLabel.style.margin = "10px";
+    titleContainer.appendChild(bookTitleLabel);
+    
+    bookTitle.setAttribute("type", "text");
+    bookTitle.setAttribute("id", "title-name");
+    bookTitle.setAttribute("name", "title-name");
+    bookTitle.style.margin = "10px";
+    titleContainer.appendChild(bookTitle);
 
-    function addAuthor() {
-        const bookAuthorLabel = document.createElement("label");
     bookAuthorLabel.classList.add("author-label");
     bookAuthorLabel.setAttribute("for", "author-name");
     bookAuthorLabel.textContent = "Author Name:";
-    bookAuthorLabel.style.paddingRight = "10px";
-    newBook.appendChild(bookAuthorLabel);
-    const bookAuthor = document.createElement("input");
+    bookAuthorLabel.style.margin = "10px";
+    authorContainer.appendChild(bookAuthorLabel);
+
     bookAuthor.setAttribute("type", "text");
     bookAuthor.setAttribute("id", "author-name");
     bookAuthor.setAttribute("name", "author-name");
-    newBook.appendChild(bookAuthor);
-    }
-
-    addAuthor();
+    bookAuthor.style.margin = "10px";
+    authorContainer.appendChild(bookAuthor);
 }

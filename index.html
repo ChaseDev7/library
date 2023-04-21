@@ -6,14 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,900;1,700&display=swap" rel="stylesheet">
     <script src="app.js" defer></script>
 </head>
 <body>
-    <h1>Library</h1>
-    <button class="add-book">Add Book</button>
-    <div class="new-book">
-        <div class="book-title"></div>
-        <div class="book-author"></div>
+    <div class="container">
+        <h1>Library</h1>
+        <button class="add-book">ADD BOOK</button>
+        <div class="new-book">
+            <div class="close-container">
+                <button class="close-button">x</button>
+            </div>
+            <div class="book-title-container"></div>
+            <div class="book-author-container"></div>
+        </div>
+    </div>
+    <div class="book-list">
+        <h2>Books</h2>
+        <div class="book-listing">
+            <div class="remove-button-container">
+                <button class="remove-book">Remove Book</button>
+            </div>
+            <p>Book Title</p>
+            <p>Author Name</p>
+            <p>Number of pages</p>
+        </div>
     </div>
 </body>
 </html>
