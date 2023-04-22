@@ -4,19 +4,19 @@ function Book(title, author, pages, readStatus) {
     this.pages = pages,
     this.readStatus = readStatus,
     this.book = function() {
-        return `${title} by ${author}. ${pages} pages. ${readStatus}.`
+        bookTitleListing = title;
+        authorNameListing = author;
+        pageCountListing = pages;
+        return ``;
     }
 }
 
 const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", "Unread");
 
-console.log(theHobbit.book());
 
-// const title = document.createElement("div");
-// const body = document.querySelector("body");
-// title.textContent = theHobbit.title;
-// body.appendChild(title);
-
+let bookTitleListing = document.querySelector(".book-title-listing");
+let authorNameListing = document.querySelector(".author-name-listing");
+let pageCountListing = document.querySelector(".page-count-listing");
 const newBook = document.querySelector(".new-book");
 newBook.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
@@ -24,11 +24,14 @@ const btnClose = document.querySelector(".close-container");
 const bookListItem = document.querySelector(".button-container");
 const titleContainer = document.querySelector(".book-title-container");
 const authorContainer = document.querySelector(".book-author-container");
+const pageCountContainer = document.querySelector(".page-count-container");
 let buttonClick = false;
 const bookTitleLabel = document.createElement("label");
 const bookTitle = document.createElement("input");
 const bookAuthorLabel = document.createElement("label");
 const bookAuthor = document.createElement("input");
+const bookPageCountLabel = document.createElement("label");
+const bookPageCount = document.createElement("input");
 const bookListing = document.querySelector(".book-listing");
 const btnReadBook = document.querySelector(".read-book");
 let isBookRead = false;
@@ -36,6 +39,8 @@ btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
 btnReadBook.textContent = "Unread";
 btnReadBook.style.color = "black";
 const btnRemoveBook = document.querySelector(".remove-book");
+const bookCount = document.querySelector(".book-count");
+let bookCounter = 0;
 
 if (buttonClick == false) {
     btnAddBook.addEventListener("click", addBook);
@@ -80,6 +85,18 @@ function addBook() {
     bookAuthor.setAttribute("name", "author-name");
     bookAuthor.style.margin = "10px";
     authorContainer.appendChild(bookAuthor);
+    
+    bookPageCountLabel.classList.add("page-count-label");
+    bookPageCountLabel.setAttribute("for", "page-count");
+    bookPageCountLabel.textContent = "Page Count:";
+    bookPageCountLabel.style.margin = "10px";
+    pageCountContainer.appendChild(bookPageCountLabel);
+
+    bookPageCount.setAttribute("type", "text");
+    bookPageCount.setAttribute("id", "page-count");
+    bookPageCount.setAttribute("name", "page-count");
+    bookPageCount.style.margin = "10px";
+    pageCountContainer.appendChild(bookPageCount);
 }
 
 function checkReadStatus() {
@@ -111,6 +128,7 @@ function closeContainer() {
     newBook.style.display = "none";
     bookTitle.value = "";
     bookAuthor.value = "";
+    bookPageCount.value = "";
 }
 
 bookListItem.style.display = "flex";
@@ -122,3 +140,5 @@ btnRemoveBook.addEventListener("click", closeBookListing);
 function closeBookListing() {
     bookListing.style.display = "none";
 }
+
+bookListing.append(theHobbit.book());

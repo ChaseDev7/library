@@ -98,3 +98,8 @@ input {
     background-color: rgb(201, 117, 117);
     color: white;
 }
+
+.book-title-listing {
+    color: green;
+    background-color: black;
+}
