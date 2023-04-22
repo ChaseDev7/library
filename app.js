@@ -21,8 +21,7 @@ const newBook = document.querySelector(".new-book");
 newBook.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
 const btnClose = document.querySelector(".close-container");
-const bookListItem = document.querySelector(".remove-button-container");
-// const btnRemoveBook = document.querySelector(".remove-book");
+const bookListItem = document.querySelector(".button-container");
 const titleContainer = document.querySelector(".book-title-container");
 const authorContainer = document.querySelector(".book-author-container");
 let buttonClick = false;
@@ -30,11 +29,13 @@ const bookTitleLabel = document.createElement("label");
 const bookTitle = document.createElement("input");
 const bookAuthorLabel = document.createElement("label");
 const bookAuthor = document.createElement("input");
-
-
-bookListItem.style.display = "flex";
-bookListItem.style.flexDirection = "column";
-bookListItem.style.alignItems = "end";
+const bookListing = document.querySelector(".book-listing");
+const btnReadBook = document.querySelector(".read-book");
+let isBookRead = false;
+btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
+btnReadBook.textContent = "Unread";
+btnReadBook.style.color = "black";
+const btnRemoveBook = document.querySelector(".remove-book");
 
 if (buttonClick == false) {
     btnAddBook.addEventListener("click", addBook);
@@ -79,4 +80,45 @@ function addBook() {
     bookAuthor.setAttribute("name", "author-name");
     bookAuthor.style.margin = "10px";
     authorContainer.appendChild(bookAuthor);
+}
+
+function checkReadStatus() {
+    if (isBookRead == false) {
+        btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
+        btnReadBook.textContent = "Unread";
+        btnReadBook.style.color = "black";
+    } else if (isBookRead == true) {
+        btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
+        btnReadBook.textContent = "Read";
+        btnReadBook.style.color = "white";
+    }
+}
+
+btnReadBook.addEventListener("click", changeReadStatus);
+
+function changeReadStatus() {
+    if (isBookRead == false) {
+        isBookRead = true;
+    } else if (isBookRead == true) {
+        isBookRead = false;
+    }
+    checkReadStatus();
+}
+
+btnClose.addEventListener("click", closeContainer);
+
+function closeContainer() {
+    newBook.style.display = "none";
+    bookTitle.value = "";
+    bookAuthor.value = "";
+}
+
+bookListItem.style.display = "flex";
+bookListItem.style.flexDirection = "row";
+bookListItem.style.justifyContent = "end";
+
+btnRemoveBook.addEventListener("click", closeBookListing);
+
+function closeBookListing() {
+    bookListing.style.display = "none";
 }
