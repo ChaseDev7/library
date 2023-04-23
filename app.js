@@ -1,3 +1,5 @@
+let myLibrary = [];
+
 function Book(title, author, pages, readStatus) {
     this.title = title,
     this.author = author,
@@ -7,12 +9,8 @@ function Book(title, author, pages, readStatus) {
         bookTitleListing = title;
         authorNameListing = author;
         pageCountListing = pages;
-        return ``;
     }
 }
-
-const theHobbit = new Book("The Hobbit", "J.R.R. Tolkien", "295", "Unread");
-
 
 let bookTitleListing = document.querySelector(".book-title-listing");
 let authorNameListing = document.querySelector(".author-name-listing");
@@ -33,14 +31,13 @@ const bookAuthor = document.createElement("input");
 const bookPageCountLabel = document.createElement("label");
 const bookPageCount = document.createElement("input");
 const bookListing = document.querySelector(".book-listing");
+// bookListing.style.display = "none";
 const btnReadBook = document.querySelector(".read-book");
 let isBookRead = false;
 btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
 btnReadBook.textContent = "Unread";
 btnReadBook.style.color = "black";
 const btnRemoveBook = document.querySelector(".remove-book");
-const bookCount = document.querySelector(".book-count");
-let bookCounter = 0;
 
 if (buttonClick == false) {
     btnAddBook.addEventListener("click", addBook);
@@ -140,5 +137,3 @@ btnRemoveBook.addEventListener("click", closeBookListing);
 function closeBookListing() {
     bookListing.style.display = "none";
 }
-
-bookListing.append(theHobbit.book());

@@ -12,6 +12,25 @@ body {
     width: 50%;
 }
 
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+h1 {
+    margin-right: 10px;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+}
+
 .book-list {
     display: flex;
     flex-direction: column;
@@ -24,27 +43,47 @@ body {
     bottom: 0;
 }
 
+.title-books {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
 h2 {
     font-size: 30px;
+    margin-right: 10px;
 }
 
 button {
     font-family: 'Roboto', sans-serif;
     font-weight: 900;
     border: 0;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 1px 2px 3px 1px lightgray;
+    cursor: pointer;
 }
 
 .add-book {
+    display: flex;
+    align-items: center;
     padding: 10px 25px;
+}
+
+#add-book-id {
+    margin-right: 2px;
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 20
 }
 
 .new-book {
     margin: 50px 25px;
     padding: 10px;
     border: 1px solid lightgray;
-    border-radius: 20px;
+    border-radius: 10px;
     background-color: rgb(220, 239, 239);
     box-shadow: 1px 2px 3px 1px lightgray;
 }
@@ -55,10 +94,12 @@ button {
 }
 
 .close-button {
-    padding: 0;
+    padding: 0px;
     width: 20px;
     height: 20px;
     border-radius: 5px;
+    box-shadow: none;
+    border: 2px solid lightgray;
 }
 
 label {
@@ -74,6 +115,17 @@ input {
     padding: 5px 10px;
     font-family: 'Roboto', sans-serif;
     width: 40%;
+}
+
+.submit-book-container {
+    display: flex;
+    justify-content: center;
+}
+
+.submit-new-book {
+    width: 150px;
+    margin: 15px 0px 10px 0px;
+    padding: 10px 0px;
 }
 
 .book-listing {
@@ -93,10 +145,20 @@ input {
 }
 
 .remove-book {
-    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    padding: 2px 15px;
     border-radius: 5px;
     background-color: rgb(201, 117, 117);
     color: white;
+}
+
+#remove-book-id {
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 300,
+    'GRAD' 0,
+    'opsz' 20
 }
 
 .book-title-listing {
