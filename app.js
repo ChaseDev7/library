@@ -1,43 +1,40 @@
-let myLibrary = [];
-
-function Book(title, author, pages, readStatus) {
-    this.title = title,
-    this.author = author,
-    this.pages = pages,
-    this.readStatus = readStatus,
-    this.book = function() {
-        bookTitleListing = title;
-        authorNameListing = author;
-        pageCountListing = pages;
-    }
-}
-
-let bookTitleListing = document.querySelector(".book-title-listing");
-let authorNameListing = document.querySelector(".author-name-listing");
-let pageCountListing = document.querySelector(".page-count-listing");
-const newBook = document.querySelector(".new-book");
+const newBook = document.querySelector("#new-book-form");
 newBook.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
-const btnClose = document.querySelector(".close-container");
-const bookListItem = document.querySelector(".button-container");
-const titleContainer = document.querySelector(".book-title-container");
-const authorContainer = document.querySelector(".book-author-container");
-const pageCountContainer = document.querySelector(".page-count-container");
+const bookListButtons = document.querySelector(".button-container");
 let buttonClick = false;
-const bookTitleLabel = document.createElement("label");
-const bookTitle = document.createElement("input");
-const bookAuthorLabel = document.createElement("label");
-const bookAuthor = document.createElement("input");
-const bookPageCountLabel = document.createElement("label");
-const bookPageCount = document.createElement("input");
+const btnSubmitBook = document.querySelector(".submit-new-book");
+
 const bookListing = document.querySelector(".book-listing");
-// bookListing.style.display = "none";
+bookListing.style.display = "none";
+
 const btnReadBook = document.querySelector(".read-book");
 let isBookRead = false;
 btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
 btnReadBook.textContent = "Unread";
 btnReadBook.style.color = "black";
 const btnRemoveBook = document.querySelector(".remove-book");
+
+let myLibrary = [];
+
+
+function Book(title, author, pages, read) {
+    this.title = title,
+    this.author = author,
+    this.pages = pages,
+    this.read = read
+}
+
+Object.setPrototypeOf(Book.prototype, myLibrary);
+
+function addBookToLibrary() {
+    let title = document.querySelector("#title").value;
+    let author = document.querySelector("#author").value;
+    let pages = document.querySelector("#pages").value;
+    let read = document.querySelector("#read").checked;
+    let newBookListing = new Book(title, author, pages, read);
+    console.log(newBookListing);
+}
 
 if (buttonClick == false) {
     btnAddBook.addEventListener("click", addBook);
@@ -49,51 +46,14 @@ if (buttonClick == false) {
 function addBook() {
     newBook.style.display = "flex";
     newBook.style.flexDirection = "column";
-    btnClose.style.alignItems = "end";
+    newBook.style.alignItems = "center";
+}
 
-    btnClose.addEventListener("click", closeContainer);
+btnSubmitBook.addEventListener("submit", submitBook);
 
-    function closeContainer() {
-        newBook.style.display = "none";
-        bookTitle.value = "";
-        bookAuthor.value = "";
-    }
-
-    bookTitleLabel.classList.add("title-label");
-    bookTitleLabel.setAttribute("for", "title-name");
-    bookTitleLabel.textContent = "Book Title:";
-    bookTitleLabel.style.margin = "10px";
-    titleContainer.appendChild(bookTitleLabel);
-    
-    bookTitle.setAttribute("type", "text");
-    bookTitle.setAttribute("id", "title-name");
-    bookTitle.setAttribute("name", "title-name");
-    bookTitle.style.margin = "10px";
-    titleContainer.appendChild(bookTitle);
-
-    bookAuthorLabel.classList.add("author-label");
-    bookAuthorLabel.setAttribute("for", "author-name");
-    bookAuthorLabel.textContent = "Author Name:";
-    bookAuthorLabel.style.margin = "10px";
-    authorContainer.appendChild(bookAuthorLabel);
-
-    bookAuthor.setAttribute("type", "text");
-    bookAuthor.setAttribute("id", "author-name");
-    bookAuthor.setAttribute("name", "author-name");
-    bookAuthor.style.margin = "10px";
-    authorContainer.appendChild(bookAuthor);
-    
-    bookPageCountLabel.classList.add("page-count-label");
-    bookPageCountLabel.setAttribute("for", "page-count");
-    bookPageCountLabel.textContent = "Page Count:";
-    bookPageCountLabel.style.margin = "10px";
-    pageCountContainer.appendChild(bookPageCountLabel);
-
-    bookPageCount.setAttribute("type", "text");
-    bookPageCount.setAttribute("id", "page-count");
-    bookPageCount.setAttribute("name", "page-count");
-    bookPageCount.style.margin = "10px";
-    pageCountContainer.appendChild(bookPageCount);
+function submitBook(event) {
+    event.preventDefault();
+    alert("Book sumitted...");
 }
 
 function checkReadStatus() {
@@ -119,21 +79,14 @@ function changeReadStatus() {
     checkReadStatus();
 }
 
-btnClose.addEventListener("click", closeContainer);
-
-function closeContainer() {
-    newBook.style.display = "none";
-    bookTitle.value = "";
-    bookAuthor.value = "";
-    bookPageCount.value = "";
-}
-
-bookListItem.style.display = "flex";
-bookListItem.style.flexDirection = "row";
-bookListItem.style.justifyContent = "end";
+bookListButtons.style.display = "flex";
+bookListButtons.style.flexDirection = "row";
+bookListButtons.style.justifyContent = "end";
 
 btnRemoveBook.addEventListener("click", closeBookListing);
 
 function closeBookListing() {
     bookListing.style.display = "none";
 }
+
+addBookToLibrary();
