@@ -9,7 +9,7 @@ body {
     align-items: center;
 }
 
-.title {
+.header-title {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -87,6 +87,13 @@ input {
     padding: 10px 0px;
 }
 
+.book-container {
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
 .book-listing {
     border: 2px solid lightgray;
     padding: 20px;
@@ -98,7 +105,6 @@ input {
 }
 
 .read-book {
-    margin-right: 10px;
     width: 90px;
     border-radius: 5px;
 }
