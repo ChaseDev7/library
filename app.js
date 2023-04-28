@@ -1,49 +1,74 @@
-const bookContainer = document.querySelector(".book-container");
-let bookListing = document.createElement("div");
-bookListing.classList.add(".book-listing");
 const newBook = document.querySelector("#new-book-form");
 newBook.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
 let buttonClick = false;
 
-const btnReadBook = document.querySelector(".read-book");
-btnReadBook.style.display = "none";
-btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
-btnReadBook.style.color = "black";
-// const btnRemoveBook = document.querySelector(".remove-book");
+const btnReadBook = document.createElement("div");
+btnReadBook.classList.add(".read-book");
+const btnRemoveButton = document.createElement("div");
+btnRemoveButton.classList.add(".remove-button");
 
+// Book library array
 let myLibrary = [];
 
-
+// Book object constructor
 function Book(title, author, pages, read) {
     this.title = title,
     this.author = author,
     this.pages = pages,
     this.read = read
+    // if (Book.read == true) {
+    //     btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
+    //     btnReadBook.style.color = "black";
+    // } else if (Book.read == false) {
+    //     btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
+    //     btnReadBook.style.color = "white";
+    // }
 }
 
-Object.setPrototypeOf(Book.prototype, myLibrary);
+Book.prototype.toggleRead = function() {
+    this.read = !this.read;
+}
+
+function toggleRead(index) {
+    myLibrary[index].toggleRead();
+    showNewBookInLibrary();
+}
 
 function showNewBookInLibrary() {
-    let bookDiv = document.createElement("div");
-    bookDiv.innerHTML = "";
+    let libraryDiv = document.querySelector("#library");
+    libraryDiv.innerHTML = "";
+    
     for (let i = 0; i < myLibrary.length; i++) {
         let book = myLibrary[i];
-        bookDiv.innerHTML = `<div class="book-listing">
-        <p style="font-size: 25px; font-weight: 900">${book.title}</p>
-            <p>${book.author}</p>
-            <p>${book.pages}</p>
-            <button class="read-book">${book.read}</button>
-            </div>`;
-        console.log(book.read);
-        // if (book.read === true) {
-        //     btnReadBook.textContent = "Read";
-        // } else if (book.read === false) {
-        //     btnReadBook.textContent = "Unread";
-        // }
-        bookContainer.appendChild(bookDiv);
+        let bookDiv = document.createElement("div");
+        bookDiv.setAttribute("class", "book-listing");
+        bookDiv.innerHTML = `
+            <p style="font-size: 25px; font-weight: 900; margin: 5px 5px 5px 0px">${book.title}</p>
+            <p style="margin: 3px 0px">by "${book.author}"</p>
+            <p style="font-size: 12px; margin: 3px 0px">${book.pages} pages</p>
+            <div class="book-buttons-container">
+                <button class="read-book" onclick="toggleRead(${i})">${book.read ? "Read" : "Unread"}</button>
+                <button class="remove-book" onclick="removeBook(${i})"><span class="material-symbols-outlined" id="remove-book-id">delete</span>Remove Book</button>
+            </div>
+        `;
+
+        if (book.read == true) {
+            btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
+            btnReadBook.style.color = "white";
+        } else if (book.read == false) {
+            btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
+            btnReadBook.style.color = "black";
+        }
+
+        libraryDiv.appendChild(bookDiv);
     }
     console.log(myLibrary);
+}
+
+function removeBook(index) {
+    myLibrary.splice(index, 1);
+    showNewBookInLibrary();
 }
 
 function addBookToLibrary() {
@@ -86,15 +111,4 @@ function submitBook(event) {
 //         btnReadBook.textContent = "Read";
 //         btnReadBook.style.color = "white";
 //     }
-// }
-
-// btnReadBook.addEventListener("click", changeReadStatus);
-
-// function changeReadStatus() {
-//     if (isBookRead == false) {
-//         isBookRead = true;
-//     } else if (isBookRead == true) {
-//         isBookRead = false;
-//     }
-//     checkReadStatus();
 // }
