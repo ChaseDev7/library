@@ -1,84 +1,108 @@
-const newBook = document.querySelector("#new-book-form");
-newBook.style.display = "none";
+const newBookForm = document.querySelector("#new-book-form");
+newBookForm.style.display = "none";
 const btnAddBook = document.querySelector(".add-book");
 let buttonClick = false;
-
-const btnReadBook = document.createElement("div");
-btnReadBook.classList.add(".read-book");
-const btnRemoveButton = document.createElement("div");
-btnRemoveButton.classList.add(".remove-button");
-
-// Book library array
-let myLibrary = [];
 
 // Book object constructor
 function Book(title, author, pages, read) {
     this.title = title,
     this.author = author,
-    this.pages = pages,
+    this.pages = pages + " pages",
     this.read = read
-    // if (Book.read == true) {
-    //     btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
-    //     btnReadBook.style.color = "black";
-    // } else if (Book.read == false) {
-    //     btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
-    //     btnReadBook.style.color = "white";
-    // }
 }
 
-Book.prototype.toggleRead = function() {
-    this.read = !this.read;
-}
+// Book library array
+let myLibrary = [];
 
-function toggleRead(index) {
-    myLibrary[index].toggleRead();
-    showNewBookInLibrary();
-}
+let newBook;
 
-function showNewBookInLibrary() {
-    let libraryDiv = document.querySelector("#library");
-    libraryDiv.innerHTML = "";
-    
-    for (let i = 0; i < myLibrary.length; i++) {
-        let book = myLibrary[i];
-        let bookDiv = document.createElement("div");
-        bookDiv.setAttribute("class", "book-listing");
-        bookDiv.innerHTML = `
-            <p style="font-size: 25px; font-weight: 900; margin: 5px 5px 5px 0px">${book.title}</p>
-            <p style="margin: 3px 0px">by "${book.author}"</p>
-            <p style="font-size: 12px; margin: 3px 0px">${book.pages} pages</p>
-            <div class="book-buttons-container">
-                <button class="read-book" onclick="toggleRead(${i})">${book.read ? "Read" : "Unread"}</button>
-                <button class="remove-book" onclick="removeBook(${i})"><span class="material-symbols-outlined" id="remove-book-id">delete</span>Remove Book</button>
-            </div>
-        `;
+newBookForm.addEventListener("submit", addBookToLibrary);
 
-        if (book.read == true) {
-            btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
-            btnReadBook.style.color = "white";
-        } else if (book.read == false) {
-            btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
-            btnReadBook.style.color = "black";
-        }
+function addBookToLibrary(event) {
+    event.preventDefault();
 
-        libraryDiv.appendChild(bookDiv);
-    }
-    console.log(myLibrary);
-}
-
-function removeBook(index) {
-    myLibrary.splice(index, 1);
-    showNewBookInLibrary();
-}
-
-function addBookToLibrary() {
     let title = document.querySelector("#title").value;
     let author = document.querySelector("#author").value;
     let pages = document.querySelector("#pages").value;
     let read = document.querySelector("#read").checked;
-    let newBookListing = new Book(title, author, pages, read);
-    myLibrary.push(newBookListing);
-    showNewBookInLibrary();
+
+    newBook = new Book(title, author, pages, read);
+    myLibrary.push(newBook);
+    newBookForm.style.display = "none";
+    showBookLibrary();
+    console.log(myLibrary);
+}
+
+function showBookLibrary() {
+    let libraryDiv = document.querySelector("#library");
+    const books = document.querySelectorAll(".book");
+    books.forEach(book => libraryDiv.removeChild(book));
+    
+    for (let i = 0; i < myLibrary.length; i++) {
+        newBookCard(myLibrary[i]);
+    }
+}
+
+function newBookCard(card) {
+    const library = document.querySelector("#library");
+    const bookDiv = document.createElement("div");
+    const titleDiv = document.createElement("div");
+    const authorDiv = document.createElement("div");
+    const pagesDiv = document.createElement("div");
+    const btnRemoveBook = document.createElement("button");
+    const btnReadBook = document.createElement("button");
+    const bookButtonDiv = document.createElement("div");
+
+    bookButtonDiv.classList.add("book-buttons-container");
+
+    bookDiv.classList.add("book");
+    bookDiv.setAttribute("id", myLibrary.indexOf(card));
+
+    titleDiv.innerHTML = `<p style="font-weight: 900; margin: 2px">${card.title}</p>`;
+    titleDiv.setAttribute("id", "title");
+    bookDiv.appendChild(titleDiv);
+
+    authorDiv.innerHTML = `<p style="margin: 2px">by "${card.author}"</p>`;
+    authorDiv.setAttribute("id", "author");
+    bookDiv.appendChild(authorDiv);
+
+    pagesDiv.innerHTML = `<p style="margin: 2px; font-size: 12px">${card.pages}</p>`;
+    pagesDiv.setAttribute("id", "pages");
+    bookDiv.appendChild(pagesDiv);
+
+    bookDiv.appendChild(bookButtonDiv);
+
+    btnReadBook.classList.add("read-book");
+    bookButtonDiv.appendChild(btnReadBook);
+
+    if (card.read === false) {
+        btnReadBook.textContent = "Unread";
+        btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
+    } else {
+        btnReadBook.textContent = "Read";
+        btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
+        btnReadBook.style.color = "white";
+    }
+
+    btnRemoveBook.classList.add("remove-book");
+    btnRemoveBook.setAttribute("id", "remove-book-id");
+    btnRemoveBook.innerHTML = `
+    <span class="material-symbols-outlined" id="add-book-id">delete</span>
+    <p style="margin: 0px">Remove</p>
+    `;
+    bookButtonDiv.appendChild(btnRemoveBook);
+
+    library.appendChild(bookDiv);
+
+    btnRemoveBook.addEventListener("click", () => {
+        myLibrary.splice(myLibrary.indexOf(card), 1);
+        showBookLibrary();
+    });
+
+    btnReadBook.addEventListener("click", () => {
+        card.read = !card.read;
+        showBookLibrary();
+    });
 }
 
 if (buttonClick == false) {
@@ -89,26 +113,19 @@ if (buttonClick == false) {
 }
 
 function addBook() {
-    newBook.style.display = "flex";
-    newBook.style.flexDirection = "column";
-    newBook.style.alignItems = "center";
+    newBookForm.style.display = "flex";
+    newBookForm.style.flexDirection = "column";
+    newBookForm.style.alignItems = "center";
+
+    const titleText = document.querySelector("#title");
+    titleText.value = "";
+
+    const authorText = document.querySelector("#author");
+    authorText.value = "";
+
+    const pagesText = document.querySelector("#pages");
+    pagesText.value = "";
+
+    const readChecked = document.querySelector("#read");
+    read.checked = false;
 }
-
-newBook.addEventListener("submit", submitBook);
-
-function submitBook(event) {
-    event.preventDefault();
-    addBookToLibrary();
-}
-
-// function checkReadStatus() {
-//     if (isBookRead == false) {
-//         btnReadBook.style.backgroundColor = "rgb(236, 229, 229)";
-//         btnReadBook.textContent = "Unread";
-//         btnReadBook.style.color = "black";
-//     } else if (isBookRead == true) {
-//         btnReadBook.style.backgroundColor = "rgb(86, 160, 86)";
-//         btnReadBook.textContent = "Read";
-//         btnReadBook.style.color = "white";
-//     }
-// }
